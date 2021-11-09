@@ -97,7 +97,19 @@ print('ROC AUC Error TENSORFLOW:', metrics.roc_auc_score(y_test, y_prob_tensor))
 JSMA_ModelAttack = SaliencyMapMethod(classifier=model)
 adversial_100 = []
 for i in range(100):
-     adversial_100.append(JSMA_ModelAttack.generate(X_train,y_train))
+     adversial_100.append(JSMA_ModelAttack.generate(X_train))
+
+#y_prob_real = model.predict(X_test)
+#y_prob_attack = model.predict(adversial_100[0])
+#y_pred_real = np.argmax(y_prob_real,axis=1)
+#y_pred_attack = np.argmax(y_prob_attack,axis=1)
+
+y_evaluate = model.evaluate(X_test,y_test)
+print(f"Accuracy on test real : {y_evaluate}")
+
+y_evaluate_attack = model.evaluate(adversial_100[0],y_test)
+print(f"Accuracy on test attack : {y_evaluate}")
+
 
 
 ################################################################ MODEL CREATION PYTORCH ########################################################
